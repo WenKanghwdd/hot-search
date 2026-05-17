@@ -1,0 +1,53 @@
+name: 热搜数据采集与部署
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  fetch-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 采集热搜数据
+        env:
+          QILING_TOKEN: ${{ secrets.QILING_TOKEN }}
+        run: python3 .github/scripts/fetch_data.py
+
+      - name: 提交数据
+        run: |
+          git config user.name "Hot Search Bot"
+          git config user.email "bot@hotsearch"
+          git add data/
+          git diff --quiet && git diff --staged --quiet || \
+            git commit -m "chore: update data $(date +'%Y-%m-%d %H:%M')"
+          git push
+
+      - name: 上传 Pages 素材
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
