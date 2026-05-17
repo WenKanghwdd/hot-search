@@ -14,6 +14,7 @@ PLATFORMS = {
     "douyin": "抖音",
     "baidu": "百度",
     "toutiao": "今日头条",
+    "sogou": "搜狗",
 }
 
 def fetch(platform):
