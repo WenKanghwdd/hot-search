@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>热搜聚合 - 日/周/月排行</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <h1>热搜聚合</h1>
+    <p class="subtitle">多平台热搜排行 · 每6小时自动更新</p>
+    <p class="update-time" id="updateTime">加载中...</p>
+  </header>
+  <nav class="period-nav">
+    <button class="period-btn active" data-period="day">今日</button>
+    <button class="period-btn" data-period="week">本周</button>
+    <button class="period-btn" data-period="month">本月</button>
+  </nav>
+  <nav class="platform-nav" id="platformNav">
+    <button class="platform-btn active" data-platform="weibo">微博</button>
+    <button class="platform-btn" data-platform="douyin">抖音</button>
+    <button class="platform-btn" data-platform="baidu">百度</button>
+    <button class="platform-btn" data-platform="toutiao">今日头条</button>
+    <button class="platform-btn" data-platform="bilibili">B站</button>
+    <button class="platform-btn" data-platform="zhihu">知乎</button>
+  </nav>
+  <div class="loading" id="loading">数据加载中...</div>
+  <div class="hot-list" id="hotList"></div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
