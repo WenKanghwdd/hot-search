@@ -3,12 +3,18 @@
 import json, os, time
 from datetime import datetime, timezone, timedelta
 from urllib.request import Request, urlopen
-from urllib.error import HTTPError
 
 TZ = timezone(timedelta(hours=8))
 TOKEN = os.environ.get("QILING_TOKEN", "")
 BASE_URL = "https://api.istero.com/resource/v1"
-PLATFORMS = {"weibo":"微博","douyin":"抖音","baidu":"百度","toutiao":"今日头条","bilibili":"B站","zhihu":"知乎"}
+
+# 已验证可用的平台
+PLATFORMS = {
+    "weibo": "微博",
+    "douyin": "抖音",
+    "baidu": "百度",
+    "toutiao": "今日头条",
+}
 
 def fetch(platform):
     url = f"{BASE_URL}/{platform}/top?token={TOKEN}"
@@ -38,8 +44,9 @@ def main():
         time.sleep(1.1)
 
     snapshot = {"update_time": now.isoformat(), "date": ds, "platforms": result}
-    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    root = os.getcwd()  # Actions runner的工作目录就是仓库根目录
 
+    os.makedirs(os.path.join(root, "data"), exist_ok=True)
     with open(os.path.join(root, "data", "latest.json"), "w", encoding="utf-8") as f:
         json.dump(snapshot, f, ensure_ascii=False, indent=2)
     print(f"\n✅ data/latest.json 已更新")
