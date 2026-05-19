@@ -2,7 +2,7 @@ name: 热搜数据采集与部署
 
 on:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 permissions:
