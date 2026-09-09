@@ -1,0 +1,15 @@
+{
+  "date": "2026-09-10",
+  "snapshots": [
+    {
+      "time": "02:02:20",
+      "platforms": {
+        "weibo": null,
+        "douyin": null,
+        "baidu": null,
+        "toutiao": null,
+        "sogou": null
+      }
+    }
+  ]
+}
